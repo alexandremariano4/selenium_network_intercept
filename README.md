@@ -8,7 +8,7 @@ Possibilitando validações e caso queira aprofundar, alterações e melhorias n
 
 Após muitas horas de pesquisa e chat GPT 😅🤡, pude encontrar a forma mais simples de implementar e que trouxe melhores resultados para minhas necessidades (validação de responses).
 
-Portanto abaixo apresentarei a vocês um código que não é de extrema complexidade, pode ser não a forma mais efetiva, mas, é a forma que consegui resolver meus problemas, e espero que seja o suficiente para resolver o de mais alguém.
+Portanto abaixo apresentarei a vocês um código que não é de extrema complexidade, pode não ser a forma mais efetiva, mas, é a forma que consegui resolver meus problemas, e espero que seja o suficiente para resolver o de mais alguém.
 
 ---
 
@@ -18,7 +18,7 @@ Portanto abaixo apresentarei a vocês um código que não é de extrema complexi
 2. Faça o clone deste repositório utilizando o git
 3. Vá para a pasta onde foi clonado e abra a pasta “selenium-network-intercept”
 4. No terminal, caso queira (Eu recomendo), use o comando `python -m venv .venv` para instalar as dependências em um ambiente virtual que poderá ser excluído caso queira
-5. Para ativar o ambiente virtual, para windows use o comando `.\.venv\Scripts\activate` em Linux `source venv\Scripts\Activate`, caso não tenha conseguido, recomendo seguir este vídeo: [https://www.youtube.com/watch?v=m1TYpvIYm74&ab_channel=OtávioMiranda](https://www.youtube.com/watch?v=m1TYpvIYm74&ab_channel=Ot%C3%A1vioMiranda)
+5. Para ativar o ambiente virtual, para windows use o comando `.\.venv\Scripts\activate` em Linux `source .venv\Scripts\Activate`, caso não tenha conseguido, recomendo seguir este vídeo: [https://www.youtube.com/watch?v=m1TYpvIYm74&ab_channel=OtávioMiranda](https://www.youtube.com/watch?v=m1TYpvIYm74&ab_channel=Ot%C3%A1vioMiranda)
 6. No seu terminal, use o comando `pip install -r requirements.txt` (Este comando fará a instalação de todas dependências necessárias para rodar seu código)
 7. Pronto para usar o código!
 
@@ -88,7 +88,7 @@ intercept_http(
 )
 ```
 
-O motivo deste motivo é simples, a função é feita para retornar dados que podem fazer o usuário que está testando monitorar se a requisição foi feita com sucesso, não sendo necessário qualquer dado referente a query que foi feita, ou algum tipo de payload de request.
+O motivo desta diferença é simples, a função é feita para retornar dados que podem fazer o usuário que está testando monitorar se a requisição foi feita com sucesso, não sendo necessário qualquer dado referente a query que foi feita, ou algum tipo de payload de request.
 
 Também é possível usar:
 
