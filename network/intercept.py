@@ -1,3 +1,4 @@
+import time
 import json
 from network.response import network_response
 from network.request import network_request
@@ -40,6 +41,10 @@ def intercept_http(
     delay=5
     ) -> ObjectIntercepted:
     
+    initial_time = time.time()
+    
+    logs1 = driver.get_log('performance') 
+    
     """
     Obs:
     Recomendado não utilizar a busca pela rota no início da execução do driver, visto que para ser interceptado, é necessário que as rotas já tenham sido finalizadas.
@@ -61,7 +66,9 @@ def intercept_http(
     
     object_intercepted = ObjectIntercepted(route)
     
-    logs = driver.get_log('performance')
+    logs2 = driver.get_log('performance')
+    
+    logs = logs1 + logs2
     
     
     for log in logs:
@@ -99,5 +106,7 @@ def intercept_http(
         object_intercepted.set_list_of_responses(response_url)
         object_intercepted.set_list_of_requests(request_url)
         
-
+    end_time = time.time()
+    object_intercepted.time = end_time - initial_time
+    
     return object_intercepted

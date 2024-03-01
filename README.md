@@ -37,6 +37,11 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 
 options = ChromeOptions()
+#Considere as opções abaixo para otimizar o tempo da execução do código no geral
+options.add_argument('--headless') #Alerto que em algumas situações, pode não ser encontrado a requisição por conta de rodar em modo headless, faça o teste e verifique isso.
+options.page_load_strategy = 'eager'
+########################################
+
 options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
 
 driver = webdriver.Chrome(options=options)

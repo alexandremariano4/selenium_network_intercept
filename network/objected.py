@@ -53,6 +53,7 @@ class ObjectIntercepted:
     _url : str = None 
     _method : str = None 
     _error : any = None
+    _time : str = None 
     
     @property
     def body(self):
@@ -104,3 +105,12 @@ class ObjectIntercepted:
     def error(self,error):
         self._error = error
     
+    @property
+    def time(self):
+        if self._time is None:
+            return None
+        return self._time
+    
+    @time.setter
+    def time(self,time):
+        self._time = f"{time:.2f}"

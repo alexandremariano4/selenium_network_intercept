@@ -18,15 +18,18 @@ def network_response(
     
 
     
-    try:
-        # if 'route' in url:
+        # if 'route or url complete' in url:
         #     print('Debug') #Only to debug
+    try:
         if route in url:
             try:                
                 body = driver.execute_cdp_cmd('Network.getResponseBody', {'requestId': params['requestId']})
                 try:
-                    body_decoded = json.loads(body['body'])
-                    object_intercepted.body = body_decoded
+                    if body['body'] == '':
+                        object_intercepted.body = 'Sem conteúdo no body da requisição'
+                    else:
+                        body_decoded = json.loads(body['body'])
+                        object_intercepted.body = body_decoded
                 except json.decoder.JSONDecodeError:
                     object_intercepted.body = body['body']        
             except (KeyError,Exception) as error: has_error = error
