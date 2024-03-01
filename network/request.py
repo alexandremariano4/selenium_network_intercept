@@ -20,7 +20,7 @@ def network_request(
         is_filled = False
     
     try:
-        if url.endswith(route) and not is_filled:      
+        if route in url and not is_filled:      
             try:
                 if params.get('loaderId') and request.get('method') not in (None,'OPTIONS') :
                     object_intercepted.method = request['method']

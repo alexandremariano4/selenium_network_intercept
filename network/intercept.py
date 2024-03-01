@@ -61,8 +61,9 @@ def intercept_http(
 
     sleep(delay)
     
-    logs = driver.get_log('performance')
     object_intercepted = ObjectIntercepted(route)
+    
+    logs = driver.get_log('performance')
     
     for log in logs:
         message = json.loads(log.get('message')).get('message')
@@ -75,7 +76,7 @@ def intercept_http(
         request_url  = _get_url(params,'request')
         
         if 'Network.responseReceived' == method:
-            status_code = network_response(
+            network_response(
                 driver,
                 params,
                 message,
@@ -87,7 +88,7 @@ def intercept_http(
         
         
         if 'Network.requestWillBeSent' == method:
-            method = network_request(
+            network_request(
                 params,
                 message,
                 route,

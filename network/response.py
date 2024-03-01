@@ -27,7 +27,7 @@ def network_response(
     try:
         # if 'route' in url:
         #     print('Debug') #Only to debug
-        if url.endswith(route):
+        if route in url:
             try:                
                 body = driver.execute_cdp_cmd('Network.getResponseBody', {'requestId': params.get('requestId')})
                 try:
