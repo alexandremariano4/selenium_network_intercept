@@ -5,7 +5,6 @@ from time import sleep
 from network.objected import ObjectIntercepted
 
 
-
 def  _get_url(params,req_or_res): #falta teste unitario
     try:
         if req_or_res == 'response':
@@ -58,12 +57,12 @@ def intercept_http(
         Para cada solicitação interceptada, ela recupera informações relevantes, como o corpo da solicitação, 
         código de status, URL e método HTTP, e as encapsula em uma instância de ObjectIntercepted.
     """
-
     sleep(delay)
     
     object_intercepted = ObjectIntercepted(route)
     
     logs = driver.get_log('performance')
+    
     
     for log in logs:
         message = json.loads(log.get('message')).get('message')

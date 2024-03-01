@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 class AttributeEmpty(Exception):...
 class MethodError(Exception):...
+class UrlNotFoundError(Exception):...
 
 @dataclass
 class ObjectIntercepted:
@@ -51,7 +52,7 @@ class ObjectIntercepted:
     _status_code : int = None 
     _url : str = None 
     _method : str = None 
-    _error = None
+    _error : any = None
     
     @property
     def body(self):

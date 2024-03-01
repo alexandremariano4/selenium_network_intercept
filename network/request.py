@@ -25,31 +25,31 @@ def network_request(
                 if params.get('loaderId') and request.get('method') not in (None,'OPTIONS') :
                     object_intercepted.method = request['method']
                     is_filled = True
-            except KeyError:...
+            except KeyError as error: method_error = error
             
             try:
                 object_intercepted.method = params['headers'][':method']
                 is_filled = True
-            except KeyError:...
+            except KeyError as error: method_error = error
                 
             try:
                 object_intercepted.method = params['headers']['method']
                 is_filled = True
-            except KeyError:...
-            
+            except KeyError as error: method_error = error
+
             if is_filled:
                 return 'Método já preenchido'
-            raise MethodError('method não encontrado')
+        
         elif is_filled:
             return 'Método já preenchido'
         else:
-            raise MethodError(f'Rota: {route} não foi encontrada na URL: {url} ')
-    except (MethodError):
-        method_error = True
+            raise MethodError(f'Rota: {route} não foi encontrada na última URL: {url}, verifique a lista de responses se está retornando a URL desejada.')
+        
+    except MethodError as error:
+        method_error = error
         if method_error and not is_filled:
             object_intercepted.method = {
-                'resposta' : 'method não encontrado, analisar dados abaixo',
+                'resposta' : 'Parâmetro method não encontrado',
                 'erro': method_error,
                 'url': url,
-                'req': message
                 }
