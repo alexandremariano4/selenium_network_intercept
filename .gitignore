@@ -1,0 +1,13 @@
+#Pycache
+__pycache__/
+__pycache__
+.pytest
+*.pyc
+*.pyt
+.vscode
+
+#Driver stuff
+*.log
+
+#Environments variables / virtual environment
+.venv
