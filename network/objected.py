@@ -10,12 +10,18 @@ class ObjectIntercepted:
 
     Args:
         route (str): O caminho da solicitação interceptada.
+        list_of_responses (list): A lista de URLs das respostas interceptadas.
+        list_of_requests (list): A lista de URLs das solicitações interceptadas.
 
     Attributes:
         _body (list): O corpo da solicitação interceptada.
         _status_code (int): O código de status da solicitação interceptada.
         _url (str): A URL da solicitação interceptada.
         _method (str): O método HTTP da solicitação interceptada.
+        _error (str): O erro da solicitação interceptada.
+        route (str): O caminho da solicitação interceptada.
+        list_of_responses (list): A lista de URLs das respostas interceptadas.
+        list_of_requests (list): A lista de URLs das solicitações interceptadas.
     """
     
     def __init__(self,route):
