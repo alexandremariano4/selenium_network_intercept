@@ -6,7 +6,7 @@ import time
 
 options = ChromeOptions()
 options.add_argument('--log-level=3')
-options.headless = False
+options.headless = True
 options.page_load_strategy = 'eager'
 options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
 

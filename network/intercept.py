@@ -41,10 +41,6 @@ def intercept_http(
     delay=5
     ) -> ObjectIntercepted:
     
-    initial_time = time.time()
-    
-    logs1 = driver.get_log('performance') 
-    
     """
     Obs:
     Recomendado não utilizar a busca pela rota no início da execução do driver, visto que para ser interceptado, é necessário que as rotas já tenham sido finalizadas.
@@ -62,6 +58,10 @@ def intercept_http(
         Para cada solicitação interceptada, ela recupera informações relevantes, como o corpo da solicitação, 
         código de status, URL e método HTTP, e as encapsula em uma instância de ObjectIntercepted.
     """
+    initial_time = time.time()
+    
+    logs1 = driver.get_log('performance') 
+    
     sleep(delay)
     
     object_intercepted = ObjectIntercepted(route)
