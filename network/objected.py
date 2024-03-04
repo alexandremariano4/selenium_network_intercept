@@ -29,7 +29,10 @@ class ObjectIntercepted:
         self.route = route
         self.list_of_responses = []
         self.list_of_requests = []
-        
+        self.method_error = False
+        self.is_filled = False
+        self.has_error = {}
+
     
     
     def set_list_of_responses(self,url):

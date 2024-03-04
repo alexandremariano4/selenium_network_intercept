@@ -1,8 +1,6 @@
 import json
 from network.objected import ObjectIntercepted
 
-has_error = False
-
 
 def network_response(
     driver,
@@ -12,11 +10,8 @@ def network_response(
     url,
     object_intercepted : ObjectIntercepted,
     response,
-    ):
-
-    global has_error 
+    ):    
     
-
     
         # if 'route or url complete' in url:
         #     print('Debug') #Only to debug
@@ -32,21 +27,21 @@ def network_response(
                         object_intercepted.body = body_decoded
                 except json.decoder.JSONDecodeError:
                     object_intercepted.body = body['body']        
-            except (KeyError,Exception) as error: has_error = error
+            except (KeyError,Exception) as error: object_intercepted.has_error = error
 
 
             try:
                 object_intercepted.status_code = response['status']
-            except KeyError as error: has_error = error
+            except KeyError as error: object_intercepted.has_error = error
             
             try: 
                 object_intercepted.url = response['url']
-            except KeyError as error: has_error = error
+            except KeyError as error: object_intercepted.has_error = error
 
             
     except:
         object_intercepted.error = {
-            'erro': has_error,
+            'erro': object_intercepted.has_error,
             'resposta' : 'Parâmetro não encontrado',
             'url': url,
             }
