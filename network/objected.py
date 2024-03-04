@@ -29,7 +29,6 @@ class ObjectIntercepted:
         self.route = route
         self.list_of_responses = []
         self.list_of_requests = []
-        
     
     
     def set_list_of_responses(self,url):
@@ -54,6 +53,10 @@ class ObjectIntercepted:
     _method : str = None 
     _error : any = None
     _time : str = None 
+    
+    method_error = False
+    is_filled = False
+    has_error = False
     
     @property
     def body(self):
