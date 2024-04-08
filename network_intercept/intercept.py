@@ -1,5 +1,6 @@
 import time
 import json
+from network_intercept.exceptions import CapabilityNotFound
 from network_intercept.response import network_response
 from network_intercept.request import network_request
 from time import sleep
@@ -35,6 +36,22 @@ def _fix_url(url):
         return url
 
 
+def verify_capabilities(driver):
+    """
+    Verifica se o driver contém a capacidade "performance" para interceptar requisições.
+    """
+    if 'performance' in driver.log_types:
+        return None
+    raise CapabilityNotFound(
+        """O driver não contém a capacidade "performance" para interceptar requisições.
+Verifique a documentação ou tente adicionar em sua instância do webdriver:
+
+from selenium.webdriver import ChromeOptions
+options = ChromeOptions()
+options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+driver = webdriver.Chrome(options=options)"""
+    )
+
 def intercept_http(
     driver,
     route,
@@ -58,16 +75,15 @@ def intercept_http(
         Para cada solicitação interceptada, ela recupera informações relevantes, como o corpo da solicitação, 
         código de status, URL e método HTTP, e as encapsula em uma instância de ObjectIntercepted.
     """
+    verify_capabilities(driver)
+    
     initial_time = time.time()
-    
     logs1 = driver.get_log('performance') 
-    
+
     sleep(delay)
     
     object_intercepted = ObjectIntercepted(route)
-    
     logs2 = driver.get_log('performance')
-    
     logs = logs1 + logs2
     
     
