@@ -1,5 +1,5 @@
 import json
-from network_intercept.objected import ObjectIntercepted
+from selenium_network_intercept.objected import ObjectIntercepted
 
 
 def network_response(

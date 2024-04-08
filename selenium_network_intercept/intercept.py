@@ -1,10 +1,10 @@
 import time
 import json
-from network_intercept.exceptions import CapabilityNotFound
-from network_intercept.response import network_response
-from network_intercept.request import network_request
+from selenium_network_intercept.exceptions import CapabilityNotFound
+from selenium_network_intercept.response import network_response
+from selenium_network_intercept.request import network_request
 from time import sleep
-from network_intercept.objected import ObjectIntercepted
+from selenium_network_intercept.objected import ObjectIntercepted
 
 
 def  _get_url(params,req_or_res): #falta teste unitario

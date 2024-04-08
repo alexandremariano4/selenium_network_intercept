@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
-from network_intercept import intercept_http
+from selenium_network_intercept import intercept_http
 from pprint import pprint
 import time
 
