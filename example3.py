@@ -6,7 +6,6 @@ import time
 
 options = ChromeOptions()
 options.add_argument('--log-level=3')
-options.add_argument('--headless')
 options.page_load_strategy = 'eager'
 options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
 
@@ -16,20 +15,18 @@ driver.maximize_window()
 driver.delete_all_cookies()
 
 
-driver.get('https://caminhosdamoda.sebraemg.com.br/')
+driver.get('https://www.op.gg/statistics/champions')
 end_time = time.time()
+
+
+import time; time.sleep(10) #Manualmente vá e selecione algum das opções de busca (modo de jogo. nivel. regiao, periodo, position) para poder visualizar o retorno das queries, caso não seja selecionado, o interceptador retornará um objeto sem nenhum conteúdo já que não foi feito requisição de busca alguma.
 
 response_body = intercept_http(
     driver,
-    '/seller-cities',
-    delay=2)
+    '/internal/bypass/statistics/'
+    )
 
-
-extensions_to_exclude = ('.js','.html','.png','svg','php','swf','js','woff','woff2','css','.jpg','.jpeg','.gif','webp')
-
-
-for req in response_body.get_list_of_requests():
-    if not req.endswith(extensions_to_exclude) and 'http' in req and 'api' in req:
-        print(f'URL: {req}')
+pprint(response_body.query_params)
+pprint(response_body.url)
 
 print(f"Tempo de execução do início da execução até a abertura do navegador: {end_time - initial_time:.2f} segundos")

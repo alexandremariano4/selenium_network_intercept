@@ -1,5 +1,6 @@
 import json
 from network_intercept.objected import MethodError
+from network_intercept.objected import ObjectIntercepted
 
 
 def network_request(
@@ -7,7 +8,7 @@ def network_request(
     message,
     route,
     url,
-    object_intercepted,
+    object_intercepted : ObjectIntercepted,
     request
 ):
     if object_intercepted.method is None:
@@ -31,6 +32,13 @@ def network_request(
                 object_intercepted.is_filled = True
             except KeyError as error: method_error = error
 
+            try:
+                URL = params['request']['url']
+                object_intercepted.query_params = {'url': URL} 
+                querys = URL.split('?')[1].split('&')
+                object_intercepted.query_params = {'querys': querys}
+            except IndexError as error: method_error = error
+            
             if object_intercepted.is_filled:
                 return 'Método já preenchido'
         

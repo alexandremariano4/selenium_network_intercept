@@ -53,6 +53,7 @@ class ObjectIntercepted:
     _method : str = None 
     _error : any = None
     _time : str = None 
+    _query_params : dict = None 
     
     method_error = False
     is_filled = False
@@ -117,3 +118,13 @@ class ObjectIntercepted:
     @time.setter
     def time(self,time):
         self._time = f"{time:.2f}"
+        
+    @property
+    def query_params(self):
+        if self._query_params is None:
+            return None
+        return self._query_params
+    
+    @query_params.setter
+    def query_params(self,query_params):
+        self._query_params = query_params
