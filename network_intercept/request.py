@@ -1,5 +1,5 @@
 import json
-from network.objected import MethodError
+from network_intercept.objected import MethodError
 
 
 def network_request(

@@ -1,9 +1,9 @@
 import time
 import json
-from network.response import network_response
-from network.request import network_request
+from network_intercept.response import network_response
+from network_intercept.request import network_request
 from time import sleep
-from network.objected import ObjectIntercepted
+from network_intercept.objected import ObjectIntercepted
 
 
 def  _get_url(params,req_or_res): #falta teste unitario
