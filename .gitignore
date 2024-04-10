@@ -11,3 +11,8 @@ __pycache__
 
 #Environments variables / virtual environment
 .venv
+
+*.egg-info
+.pypirc
+setup.py
+

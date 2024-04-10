@@ -1,18 +1,19 @@
-# 🛑Intercepte requisições HTTP utilizando selenium🛑
+## Atualização 1.0.1
 
----
+Com a atualização da biblioteca agora é possível verificar se ao interagir com algum elemento em tela usando o selenium, se foi baixado um arquivo em um diretório específico.
 
-Com esse repositório, você terá acesso a um código escrito baseado nas funcionalidades do selenium, que trás a partir de uma função a ser chamada, a possibilidade de monitoramento das requisições em tempo de execução do seu webdriver.
+Siga a documentação oficial desta funcionalidade para entendê-la e aplicá-la na prática 
 
-Possibilitando validações e caso queira aprofundar, alterações e melhorias no próprio código, sinta-se livre para abrir issues e até fazer pull requests.
 
-Após muitas horas de pesquisa e chat GPT 😅🤡, pude encontrar a forma mais simples de implementar e que trouxe melhores resultados para minhas necessidades (validação de responses).
 
-Portanto abaixo apresentarei a vocês um código que não é de extrema complexidade, pode não ser a forma mais efetiva, mas, é a forma que consegui resolver meus problemas, e espero que seja o suficiente para resolver o de mais alguém.
+## Atualização 1.0.1
 
----
+Agora é possível recuperar os parâmetros de queries e também é retornado a URL que foi capturado os parâmetros.
+Altamente recomendado utilizar o arquivo exemplo3.py do [repositório oficial](https://github.com/alexandremariano4/selenium_network_intercept/tree/main) para ter entendimento e aplicabilidade ao seu cenário.
+Em algumas situações não será viável usar essa funcionalidade, somente a busca do objeto com body,status e url terão que satisfazer.
 
-## Get Started🔥
+
+## Get Started
 
 1. Instale o Python a partir do link: https://www.python.org/downloads/ e adicione ao PATH o executável
 2. Faça o clone deste repositório utilizando o git
@@ -22,7 +23,7 @@ Portanto abaixo apresentarei a vocês um código que não é de extrema complexi
 6. No seu terminal, use o comando `pip install -r requirements.txt` (Este comando fará a instalação de todas dependências necessárias para rodar seu código)
 7. Pronto para usar o código!
 
-O arquivo “example.py” é um bom ponto de partida para o entendimento, a partir dele, é possível você já conseguir implementar em qualquer situação para si.
+Os arquivos “example.py” no [repositório oficial](https://github.com/alexandremariano4/selenium_network_intercept/tree/main) são um bom ponto de partida para o entendimento, a partir dele, é possível você já conseguir implementar em qualquer situação para si.
 
 Mas, caso não queira utilizá-lo, explicarei abaixo.
 
@@ -54,7 +55,7 @@ A partir desta configuração, é possível receber os LOGS que trarão todas re
 Após realizada a instância, importe a função `intercept_http` do pacote network, e módulo intercept.
 
 ```python
-from network.intercept import intercept_http
+from selenium_network_intercept import intercept_http
 ```
 
 Feito isso, você já tem todas funcionalidades do pacote em uma chamada, apenas sendo necessários alterar parâmetros, vamos as explicações de como usá-la.
