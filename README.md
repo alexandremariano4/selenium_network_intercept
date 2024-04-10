@@ -2,7 +2,7 @@
 
 Com a atualização da biblioteca agora é possível verificar se ao interagir com algum elemento em tela usando o selenium, se foi baixado um arquivo em um diretório específico.
 
-Siga a documentação oficial desta funcionalidade para entendê-la e aplicá-la na prática 
+Siga o [repositório oficial](https://github.com/alexandremariano4/selenium_network_intercept/tree/main/selenium_search_file) desta funcionalidade para entendê-la e aplicá-la.
 
 
 
