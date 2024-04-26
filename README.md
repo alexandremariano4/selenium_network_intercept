@@ -1,3 +1,81 @@
+## Atualização 1.0.2
+
+Trazendo novidades, agora é possível em vez de pesquisar diretamente pela rota desejada, você buscar todas requisições já realizadas pelo navegador, podendo ser verificado no [repositório oficial](https://github.com/alexandremariano4/selenium_network_intercept/tree/main) utilizando o arquivo `example3.py`.
+
+**Agora tem a possibilida de além de somente fazer uma busca assim:**
+
+```powershell
+request = intercept_http(driver,'/route')
+```
+
+**É possível utilizar também desta forma:**
+
+```python
+request = intercept_http(driver,only_request=True)
+```
+
+Que trará um objeto que terá dois atributos importantes para esta funcionalidade 
+
+- requests
+- responses
+
+Estes atributos trarão a possibilidade de você mesmo validar todas as requisições que foram feitas desde o momento da abertura do navegador, sem preocupar com a implementação interna da biblioteca.
+
+***Mas lembre-se que ainda é possível buscar diretamente pela rota desejada***
+
+---
+
+**Use** 
+
+`request.requests`  Para ter acesso a todas requisições realizadas até o momento da chamada da função
+
+Para atualizar essa lista, utilize `request.update()`
+
+Itere sobre esta lista para fazer a própria varredura e verificar o que desejar por exemplo, buscar pela URL:
+
+```python
+for req in request.requests:
+    print(req.url)
+```
+
+atributos disponíveis para as `requests` e as `responses` 
+
+- type
+- network_method
+- url
+- status_code
+- headers
+
+E especificamente para os tipos “response”
+
+- body
+
+---
+
+**Ao chamar a função, as vezes pode ter a necessidade de atualizar as requisições já passadas para verificar se a requisição específica que você deseja buscar, finalmente apareceu.**
+
+**Use**
+
+```python
+request = intercept_http(driver,only_request=True)
+#O resto da sua automação
+request.update()
+```
+
+Desta maneira, você poderá atualizar constantemente as requisições e atualizar a lista de requisições realizadas.
+
+---
+
+A função `intercept_http` possuí novos parâmetros, alguns desses não sendo necessários envio de nenhum dado, outros, sendo opcionais.
+
+Os adicionados foram:
+
+- update ❌ *Não envie nada neste parâmetro*
+- update_object ❌ *Não envie nada neste parâmetro*
+- static_resource → Enviar como False caso queira que a função valide e retorne requisições para arquivos estáticos como “css,svg,png,jpeg” entre outros.
+- only_request  → Enviar como True caso queira receber somente a lista de requisições para utilizar assim como ensinado aqui no 1.0.2, caso envie como False, que é o padrão, será buscado a rota enviada.
+
+
 ## Atualização 1.0.1
 
 Com a atualização da biblioteca agora é possível verificar se ao interagir com algum elemento em tela usando o selenium, se foi baixado um arquivo em um diretório específico.

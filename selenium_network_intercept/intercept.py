@@ -1,13 +1,32 @@
 import time
 import json
-from selenium_network_intercept.exceptions import CapabilityNotFound
-from selenium_network_intercept.response import network_response
-from selenium_network_intercept.request import network_request
+from selenium_network_intercept.exceptions.exceptions import CapabilityNotFound,ConflictingArgumentError,ArgumentNotRequestedError
+from selenium_network_intercept.request_types.response import network_response
+from selenium_network_intercept.request_types.request import network_request
 from time import sleep
-from selenium_network_intercept.objected import ObjectIntercepted
+from selenium_network_intercept.objects.objected import ObjectIntercepted
 
 
-def  _get_url(params,req_or_res): #falta teste unitario
+def is_valid_url(url, static_resource : bool):
+    is_valid = False
+    extension = (
+        '.html','.css','.jpg','.jpeg','.png','.woff','.woff2','.js','.ico','.gif','.svg','.php','.webp','.json','.dhtml',
+        '.ghtml','js','css2','.bin')
+    if not static_resource:
+        try:
+            if not(url.endswith(extension)):
+                is_valid = True
+        except:...
+        try:
+            if not(url.endswith(extension)):
+                is_valid = True
+        except:...
+    if static_resource:
+        is_valid = True
+    return is_valid
+
+
+def  _get_url(params,req_or_res):
     try:
         if req_or_res == 'response':
             url = _fix_url(params.get('response').get('url'))
@@ -54,10 +73,14 @@ driver = webdriver.Chrome(options=options)"""
 
 def intercept_http(
     driver,
-    route,
-    delay=5
+    part_of_route=None,
+    *,
+    only_request=False,
+    static_resource=False,
+    delay=5,
+    update=False,
+    update_object=None
     ) -> ObjectIntercepted:
-    
     """
     Obs:
     Recomendado não utilizar a busca pela rota no início da execução do driver, visto que para ser interceptado, é necessário que as rotas já tenham sido finalizadas.
@@ -66,23 +89,36 @@ def intercept_http(
 
     Args:
         driver: Uma instância de WebDriver Selenium.
-        url_endswith (str): O sufixo da URL para combinar com as solicitações interceptadas.
+        part_of_route (str): Uma parte da URL para ser possível identificar a URL desejada
+        only_request (default=False) : Envie True para retornar somente requisições, sem buscar especificamente por uma
+        static_resource (default=False): Mudar para True caso queira que retorne arquivos estáticos
+        delay: Tempo de espera para a captura dos logs
+        update: Uso interno do sistema, não envie este parâmetro
+        update_object: Uso interno do sistema, não envie este parâmetro
+        
 
     Nota:
         Esta função intercepta solicitações HTTP feitas pela instância fornecida de WebDriver. Ela busca
-        solicitações cujas URLs terminam com o sufixo especificado (`url_endswith`). Não sendo necessário enviar 
+        solicitações cujas URLs terminam com o sufixo especificado (`part_of_route`). Não sendo necessário enviar 
         informações como query na URL, somente a rota necessária.
         Para cada solicitação interceptada, ela recupera informações relevantes, como o corpo da solicitação, 
         código de status, URL e método HTTP, e as encapsula em uma instância de ObjectIntercepted.
+        
+        Caso envie static_resource False para não considerar arquivos estáticos, saiba que os arquivos serão os seguintes : ('.html','.css','.jpg','.jpeg','.png','.woff','.woff2','.js','.ico','.gif','.svg','.php','.webp','.json','.dhtml','.ghtml','js','css2','.bin') 
     """
+    if part_of_route and only_request:
+        raise ConflictingArgumentError('Não utilize os argumentos `part_of_route` e `only_request` juntos.')
+    
     verify_capabilities(driver)
     
     initial_time = time.time()
     logs1 = driver.get_log('performance') 
 
     sleep(delay)
-    
-    object_intercepted = ObjectIntercepted(route)
+    if not update:
+        object_intercepted = ObjectIntercepted(part_of_route,driver)
+    else:
+        object_intercepted = update_object
     logs2 = driver.get_log('performance')
     logs = logs1 + logs2
     
@@ -97,30 +133,31 @@ def intercept_http(
         response_url = _get_url(params,'response')
         request_url  = _get_url(params,'request')
         
-        if 'Network.responseReceived' == method:
+
+
+        if 'Network.responseReceived' == method and is_valid_url(response_url,static_resource):
             network_response(
                 driver,
                 params,
                 message,
-                route,
+                part_of_route,
                 response_url,
                 object_intercepted,
-                response
+                response,
+                only_requests=only_request
             )
         
         
-        if 'Network.requestWillBeSent' == method:
+        if 'Network.requestWillBeSent' == method and is_valid_url(request_url,static_resource):
             network_request(
                 params,
                 message,
-                route,
+                part_of_route,
                 request_url,
                 object_intercepted,
-                request
+                request,
+                only_request=only_request
             )
-        
-        object_intercepted.set_list_of_responses(response_url)
-        object_intercepted.set_list_of_requests(request_url)
         
     end_time = time.time()
     object_intercepted.time = end_time - initial_time

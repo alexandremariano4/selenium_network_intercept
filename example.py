@@ -21,14 +21,11 @@ url_completa = 'https://affiliates.video.globo.com/affiliates/info'
 driver.get('https://www.globo.com/')
 end_time = time.time()
 
-
-
-
 response_body = intercept_http(
     driver,
     '/affiliates/info',
     delay=2)
+
 pprint(response_body)
-pprint(url_completa in response_body.get_list_of_responses())
-pprint(url_completa in response_body.get_list_of_requests())
+
 print(f"Tempo de execução do início da execução até a abertura do navegador: {end_time - initial_time:.2f} segundos")
